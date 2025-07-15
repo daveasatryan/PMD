@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pmd_solutions/core/data/models/product/product_model.dart';
 import 'package:pmd_solutions/core/data/utilities/storage/preferences_manager.dart';
 import 'package:pmd_solutions/core/presentation/utilities/count_provider.dart';
+import 'package:pmd_solutions/core/presentation/utilities/routes/app_routes.dart';
+import 'package:pmd_solutions/core/presentation/views/card_screen/bloc/card_screen_bloc.dart';
+import 'package:pmd_solutions/core/presentation/views/card_screen/bloc/card_screen_event.dart';
 import 'package:pmd_solutions/core/presentation/views/product_list_screen/bloc/product_list_bloc.dart';
 import 'package:pmd_solutions/core/presentation/views/product_list_screen/bloc/product_list_event.dart';
 import 'package:pmd_solutions/core/presentation/views/product_list_screen/widgets/animated_add_to_card.dart';
@@ -11,13 +15,15 @@ import 'package:pmd_solutions/core/presentation/widgets/base_state.dart';
 
 class ProductCard extends StatefulWidget {
   final ProductModel product;
-  final bool? showAddToCardIcon;
+  final bool? routeFromCard;
+  final int? index;
   final GlobalKey productKey;
   const ProductCard({
     super.key,
     required this.product,
     required this.productKey,
-    this.showAddToCardIcon = true,
+    this.routeFromCard = false,
+    this.index,
   });
 
   @override
@@ -27,58 +33,71 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends BaseState<ProductCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10.sp),
-      child: Padding(
-        padding: EdgeInsets.all(16.sp),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 100.sp,
-              height: 100.sp,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp),
-                image: DecorationImage(
-                  image: NetworkImage(widget.product.image),
-                  fit: BoxFit.contain,
+    return GestureDetector(
+      onTap: () {
+        GoRouter.of(
+          context,
+        ).push('${AppRoutes.productDetailsRoute}/${widget.product.id}');
+      },
+      child: Card(
+        margin: EdgeInsets.all(10.sp),
+        child: Padding(
+          padding: EdgeInsets.all(16.sp),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 100.sp,
+                height: 100.sp,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  image: DecorationImage(
+                    image: NetworkImage(widget.product.image),
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: 16.sp),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.product.title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+              SizedBox(width: 16.sp),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.product.title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 5.sp),
+                    SizedBox(height: 5.sp),
 
-                  Text(
-                    '\$${widget.product.price.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: colors.greenColor,
+                    Text(
+                      '\$${widget.product.price.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: colors.greenColor,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            if (widget.showAddToCardIcon == true) ...[
-              GestureDetector(
-                onTap: addToCard,
-                child: Icon(Icons.add_shopping_cart),
-              ),
+              if (widget.routeFromCard == false) ...[
+                GestureDetector(
+                  onTap: addToCard,
+                  child: Icon(Icons.add_shopping_cart),
+                ),
+              ],
+              if (widget.routeFromCard == true) ...[
+                GestureDetector(
+                  onTap: removeFromCard,
+                  child: Icon(Icons.delete),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -91,6 +110,16 @@ class _ProductCardState extends BaseState<ProductCard> {
     context.read<CountProvider>().setCount =
         (PreferencesManager.getCount ?? 0) + 1;
     _runAddToCartAnimation(widget.productKey, widget.product.image);
+  }
+
+  void removeFromCard() {
+    if (widget.index != null) {
+      context.read<CardScreenBloc>().add(
+        CardScreenEvent.removeFromCard(index: widget.index ?? 0),
+      );
+      context.read<CountProvider>().setCount =
+          (PreferencesManager.getCount ?? 0) - 1;
+    }
   }
 
   void _runAddToCartAnimation(GlobalKey productKey, String imageUrl) {

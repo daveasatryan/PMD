@@ -20,27 +20,33 @@ mixin _$CardScreenEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getCardData,
+    required TResult Function(int index) removeFromCard,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getCardData,
+    TResult? Function(int index)? removeFromCard,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getCardData,
+    TResult Function(int index)? removeFromCard,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetCardData value) getCardData,
+    required TResult Function(DeleteFromCard value) removeFromCard,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetCardData value)? getCardData,
+    TResult? Function(DeleteFromCard value)? removeFromCard,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetCardData value)? getCardData,
+    TResult Function(DeleteFromCard value)? removeFromCard,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -111,6 +117,7 @@ class _$GetCardDataImpl implements GetCardData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getCardData,
+    required TResult Function(int index) removeFromCard,
   }) {
     return getCardData();
   }
@@ -119,6 +126,7 @@ class _$GetCardDataImpl implements GetCardData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getCardData,
+    TResult? Function(int index)? removeFromCard,
   }) {
     return getCardData?.call();
   }
@@ -127,6 +135,7 @@ class _$GetCardDataImpl implements GetCardData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getCardData,
+    TResult Function(int index)? removeFromCard,
     required TResult orElse(),
   }) {
     if (getCardData != null) {
@@ -139,6 +148,7 @@ class _$GetCardDataImpl implements GetCardData {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetCardData value) getCardData,
+    required TResult Function(DeleteFromCard value) removeFromCard,
   }) {
     return getCardData(this);
   }
@@ -147,6 +157,7 @@ class _$GetCardDataImpl implements GetCardData {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetCardData value)? getCardData,
+    TResult? Function(DeleteFromCard value)? removeFromCard,
   }) {
     return getCardData?.call(this);
   }
@@ -155,6 +166,7 @@ class _$GetCardDataImpl implements GetCardData {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetCardData value)? getCardData,
+    TResult Function(DeleteFromCard value)? removeFromCard,
     required TResult orElse(),
   }) {
     if (getCardData != null) {
@@ -166,4 +178,151 @@ class _$GetCardDataImpl implements GetCardData {
 
 abstract class GetCardData implements CardScreenEvent {
   const factory GetCardData() = _$GetCardDataImpl;
+}
+
+/// @nodoc
+abstract class _$$DeleteFromCardImplCopyWith<$Res> {
+  factory _$$DeleteFromCardImplCopyWith(
+    _$DeleteFromCardImpl value,
+    $Res Function(_$DeleteFromCardImpl) then,
+  ) = __$$DeleteFromCardImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$DeleteFromCardImplCopyWithImpl<$Res>
+    extends _$CardScreenEventCopyWithImpl<$Res, _$DeleteFromCardImpl>
+    implements _$$DeleteFromCardImplCopyWith<$Res> {
+  __$$DeleteFromCardImplCopyWithImpl(
+    _$DeleteFromCardImpl _value,
+    $Res Function(_$DeleteFromCardImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of CardScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? index = null}) {
+    return _then(
+      _$DeleteFromCardImpl(
+        index:
+            null == index
+                ? _value.index
+                : index // ignore: cast_nullable_to_non_nullable
+                    as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$DeleteFromCardImpl implements DeleteFromCard {
+  const _$DeleteFromCardImpl({required this.index});
+
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'CardScreenEvent.removeFromCard(index: $index)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DeleteFromCardImpl &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  /// Create a copy of CardScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteFromCardImplCopyWith<_$DeleteFromCardImpl> get copyWith =>
+      __$$DeleteFromCardImplCopyWithImpl<_$DeleteFromCardImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getCardData,
+    required TResult Function(int index) removeFromCard,
+  }) {
+    return removeFromCard(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getCardData,
+    TResult? Function(int index)? removeFromCard,
+  }) {
+    return removeFromCard?.call(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getCardData,
+    TResult Function(int index)? removeFromCard,
+    required TResult orElse(),
+  }) {
+    if (removeFromCard != null) {
+      return removeFromCard(index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetCardData value) getCardData,
+    required TResult Function(DeleteFromCard value) removeFromCard,
+  }) {
+    return removeFromCard(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetCardData value)? getCardData,
+    TResult? Function(DeleteFromCard value)? removeFromCard,
+  }) {
+    return removeFromCard?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetCardData value)? getCardData,
+    TResult Function(DeleteFromCard value)? removeFromCard,
+    required TResult orElse(),
+  }) {
+    if (removeFromCard != null) {
+      return removeFromCard(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DeleteFromCard implements CardScreenEvent {
+  const factory DeleteFromCard({required final int index}) =
+      _$DeleteFromCardImpl;
+
+  int get index;
+
+  /// Create a copy of CardScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeleteFromCardImplCopyWith<_$DeleteFromCardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

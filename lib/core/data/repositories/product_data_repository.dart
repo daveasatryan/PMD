@@ -11,4 +11,7 @@ class ProductRepository {
 
   Future<HttpResponse<List<ProductModel>>> getProductData() async =>
       await dataSource.getProductData();
+
+  Future<HttpResponse<ProductModel>> getProductById(int id) async =>
+      await dataSource.getProductById(id);
 }

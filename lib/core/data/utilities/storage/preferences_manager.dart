@@ -53,9 +53,13 @@ class PreferencesManager {
     products = currentProducts;
   }
 
-  static void removeProduct(int productId) {
+  static void removeProduct(int index) {
     List<ProductModel> currentProducts = getProducts;
-    currentProducts.removeWhere((product) => product.id == productId);
+    if (index >= 0 && index < currentProducts.length) {
+      currentProducts.removeAt(index);
+    } else {
+      throw RangeError("Index $index is out of bounds for the products list.");
+    }
     products = currentProducts;
   }
 

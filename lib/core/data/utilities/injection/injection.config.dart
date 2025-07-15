@@ -17,9 +17,13 @@ import 'package:pmd_solutions/core/data/repositories/product_data_repository.dar
     as _i792;
 import 'package:pmd_solutions/core/data/usecases/product_data/get_product_data_usecase.dart'
     as _i964;
+import 'package:pmd_solutions/core/data/usecases/product_details/get_product_detalis_usecase.dart'
+    as _i287;
 import 'package:pmd_solutions/core/data/utilities/api/api.dart' as _i637;
 import 'package:pmd_solutions/core/presentation/views/card_screen/bloc/card_screen_bloc.dart'
     as _i1008;
+import 'package:pmd_solutions/core/presentation/views/product_details_screen/bloc/product_details_bloc.dart'
+    as _i455;
 import 'package:pmd_solutions/core/presentation/views/product_list_screen/bloc/product_list_bloc.dart'
     as _i104;
 
@@ -41,6 +45,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i964.GetProductDataUsecase(
         repository: gh<_i792.ProductRepository>(),
       ),
+    );
+    gh.factory<_i287.GetProductDetalisUsecase>(
+      () => _i287.GetProductDetalisUsecase(
+        repository: gh<_i792.ProductRepository>(),
+      ),
+    );
+    gh.factory<_i455.ProductDetailsBloc>(
+      () => _i455.ProductDetailsBloc(gh<_i287.GetProductDetalisUsecase>()),
     );
     gh.factory<_i104.ProductListBloc>(
       () => _i104.ProductListBloc(gh<_i964.GetProductDataUsecase>()),

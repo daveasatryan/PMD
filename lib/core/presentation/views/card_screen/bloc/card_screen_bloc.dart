@@ -7,6 +7,7 @@ import 'package:pmd_solutions/core/presentation/views/card_screen/bloc/card_scre
 
 @injectable
 class CardScreenBloc extends Bloc<CardScreenEvent, CardScreenState> {
+  var productList = PreferencesManager.getProducts;
   final GetProductDataUsecase getInitialDataUsecase;
 
   CardScreenBloc(this.getInitialDataUsecase)
@@ -15,8 +16,16 @@ class CardScreenBloc extends Bloc<CardScreenEvent, CardScreenState> {
       try {
         emit(const CardScreenState.loading());
 
-        final productList = PreferencesManager.getProducts;
+        emit(CardScreenState.success(productList: productList));
+      } catch (e) {
+        emit(CardScreenState.error(message: e.toString()));
+      }
+    });
 
+    on<DeleteFromCard>((event, emit) {
+      try {
+        PreferencesManager.removeProduct(event.index);
+        productList = PreferencesManager.getProducts;
         emit(CardScreenState.success(productList: productList));
       } catch (e) {
         emit(CardScreenState.error(message: e.toString()));

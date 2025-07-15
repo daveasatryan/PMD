@@ -15,4 +15,8 @@ class ProductDataSource {
   Future<HttpResponse<List<ProductModel>>> getProductData() async {
     return await api.getProductData();
   }
+
+  Future<HttpResponse<ProductModel>> getProductById(int id) async {
+    return await api.getProductById(id);
+  }
 }
