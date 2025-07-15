@@ -13,6 +13,7 @@ class PreferencesManager {
 
   /// keys
   static const _products = 'products';
+  static const _count = 'count';
 
   static List<ProductModel> get getProducts {
     String? productsJson = _pref.getString(_products);
@@ -21,6 +22,18 @@ class PreferencesManager {
       return decodedList.map((item) => ProductModel.fromJson(item)).toList();
     } else {
       return [];
+    }
+  }
+
+  static int? get getCount {
+    return _pref.getInt(_count);
+  }
+
+  static set setCount(int? count) {
+    if (count != null) {
+      _pref.setInt(_count, count);
+    } else {
+      return;
     }
   }
 

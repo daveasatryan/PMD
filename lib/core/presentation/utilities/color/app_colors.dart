@@ -18,5 +18,5 @@ class AppColors {
   Color get whisperBorderColor => const Color(0xFFD8DADC);
   Color get customButtonBorderColor => const Color(0xFFE2E2E2);
   Color get lableColor => const Color(0xFF676767);
-  Color get errorTextColor => const Color(0xFFFF3A3A);
+  Color get redColor => const Color(0xFFFF3A3A);
 }

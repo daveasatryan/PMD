@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pmd_solutions/core/data/utilities/bloc/bloc_factory.dart';
 import 'package:pmd_solutions/core/data/utilities/sl/service_locator_factory.dart';
+import 'package:pmd_solutions/core/presentation/utilities/count_provider.dart';
 import 'package:pmd_solutions/core/presentation/utilities/routes/app_routes.dart';
 import 'package:pmd_solutions/core/presentation/views/product_list_screen/bloc/product_list_bloc.dart';
 import 'package:pmd_solutions/core/presentation/widgets/base_state.dart';
@@ -27,6 +28,7 @@ class ApplicationState extends BaseState<Application> {
         providers: [
           Provider(create: (context) => BlocFactory(getIt: GetIt.instance)),
           Provider(create: (context) => SlFactory(getIt: GetIt.instance)),
+          ChangeNotifierProvider(create: (context) => CountProvider()),
         ],
         child: Builder(
           builder: (context) {
